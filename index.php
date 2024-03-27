@@ -4,21 +4,18 @@ $username = "root";
 $password = "";
 $dbname = "konserwa";
 
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Połączenie nieudane: ". $conn->connect_error);
 }
 
-$sql = "SELECT * FROM konserwa";
-$result = $conn->query($sql);
-
-echo "<ol>"
-while ($row = $result->fetch_assoc()){
-    echo "<li>" . $row{"tytul"} . "</li>";
+$sql = "SELECT * FROM przepisy";
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+    $sql = "SELECT * FROM przepisy WHERE tytul LIKE \"%$search%\";";
 }
-echo "</ol>"
-
-$conn->close();
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -37,9 +34,9 @@ $conn->close();
         
         <h1>Prosta wyszukiwarka</h1>
         
-        <form action="/search-results-page" method="get">
+        <form action="/sieraczan/przepisy/index.php" method="get">
         <label for="searchQuery">Wyszukaj:</label>
-        <input type="text" id="searchQuery" name="q" placeholder="Znajdz swój przepis">
+        <input type="text" id="searchQuery" name="search" placeholder="Znajdz swój przepis">
         <button type="submit">Szukaj</button>
         </form>
 
@@ -48,48 +45,37 @@ $conn->close();
         <br>
 
         <div class="recipe-container">
-            <div class="recipe" onclick="toasts()">
-                <h2>Tosty</h2>
-                <img src="tosty-omletem-i-szynka.webp" alt="Trulli" width="500" height="333">
-            </div>
-
-            <div class="recipe" onclick="hotdogs()">
-                <h2>Hot Dogi</h2>
-                <img src="d257bb4fe192628f00a98b1f08a7976fbf7f21d4.jpg" alt="Trulli" width="500" height="333">
-            </div>
-
-            <div class="recipe" onclick="steak()">
-                <h2>stek t-bone</h2>
-                <img src="przepis-na-stek-t-bone-01.jpg" alt="Trulli" width="500" height="333">
-                </div>
-
-            <div class="recipe" onclick="potato()">
-            <h2>Ziemniak</h2>
-            <img src="220px-The_real_me.jpg" alt="Trulli" width="500" height="333"></div>
+        <?php
+            if (mysqli_num_rows($result) > 0) {
+                // Output each recipe
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $ID = $row["ID"];
+                    $name = $row['tytul'];
+                    $icon = $row['ikona'];
+                    $ingredients = $row['skladniki'];
+                    $how_to_make = $row['jak_zrobic'];
+            
+                    // Generate HTML for the recipe
+                    echo '<div class="recipe">';
+                    // xd
+                    echo "<a href=\"http://localhost/sieraczan/przepisy/recipe.php?id=$ID\"><img src=\"$icon\" alt=\"Recipe Icon\"></a>";
+                    echo "<h2>$name</h2>";
+                    // You can include additional information like ingredients and how to make here
+                    echo '</div>';
+                }
+            } else {
+                echo "No recipes found.";
+            }
+            ?>
         </div>
-        <div class="recipe" onclick="Add()">
-                <h2>Dodaj swój przepis</h2>
-                <img src="plus-symbol-wektor-typografii-obrysu-pedzla_53876-166821.avif" alt="Trulli" width="500" height="333">
-                </div>
 
-        <script>
-            function toasts() {
-                window.location.href = "http://localhost/sieraczan/przepisy/recipes/toasts.html";
-            }
-
-            function hotdogs() {
-                window.location.href = "http://localhost/sieraczan/przepisy/recipes/hotdogs.html";
-            }
-
-            function steak() {
-                window.location.href = "http://localhost/sieraczan/przepisy/recipes/steak.html";
-            }
-            function potato() {
-                window.location.href = "http://localhost/sieraczan/przepisy/recipes/potato.html";
-            }
-            function Add() {
-                window.location.href = "http://localhost/sieraczan/przepisy/recipes/Add.html";
-            }
-        </script>
+        <a href="http://localhost/sieraczan/przepisy/Add.php"><div class="recipe" onclick="Add()">
+            <h2>Dodaj swój przepis</h2>
+            <img src="plus-symbol-wektor-typografii-obrysu-pedzla_53876-166821.avif" alt="Trulli" width="500" height="333">
+        </div></a>
     </body>
 </html>
+
+<?php
+$conn->close();
+?>

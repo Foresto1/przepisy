@@ -35,6 +35,12 @@ body {
   margin-left: 20px;
   margin-right: 20px;
   height: 400px;
+  flex-wrap: wrap;
+}
+
+.recipe img {
+  height: 340px;
+  width: auto;
 }
 
 .recipe:hover {

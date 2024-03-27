@@ -1,22 +1,24 @@
 <?php
-$servername = "localhost";
+
+$name = $_POST['name'];
+$icon = $_POST['icon'];
+$ingredients = $_POST['ingredients'];
+$how_to_make = $_POST['how-to-make'];
+
+$server = "localhost";
 $username = "root";
 $password = "";
 $dbname = "konserwa";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($server, $username, $password, $dbname);
+
 if ($conn->connect_error) {
-    die("Połączenie nieudane: ". $conn->connect_error);
+    die("". $conn->connect_error);
 }
 
-$title = $_POST['title'];
-$description = $_POST['description'];
+$sql = "INSERT INTO przepisy(tytul, ikona, skladniki, jak_zrobic) VALUES ('$name', '$icon', '$ingredients', '$how_to_make');";
+$conn->query($sql);
 
-$sql = "INSERT INTO przepisy(tytul, opis) VALUES ('$title', '$description')";
+$conn->close();
 
-if($coon->query($sql) === TRUE) {
-    echo "Gratulacje Dodałeś przepis";
-} else {
-    echo "Coś poszło nie tak";
-}
-?>
+header("Location: http://localhost/sieraczan/przepisy/index.php");
