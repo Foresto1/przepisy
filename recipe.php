@@ -38,13 +38,15 @@ $recipeHowToMake = $row['jak_zrobic'];
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Przepisomat :: Szczegóły Przepisu</title>
+        <title>Przepis :: Szczegóły Przepisu</title>
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
         <div class="header-container">
             <div class="logo">
-                <h1>Przepisomat</h1>
+                <header>
+                <h1>Przepis</h1>
+                </header>
             </div>
 
             <div class="back-button">
