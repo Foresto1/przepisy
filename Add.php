@@ -9,7 +9,7 @@
     <body>
         <div class="header-container">
             <div class="logo">
-                <h1>Przepisomat</h1>
+                <h1>Przepis</h1>
             </div>
 
             <div class="back-button">
