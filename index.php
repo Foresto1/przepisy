@@ -27,7 +27,7 @@ $result = $conn->query($sql);
         <link rel="stylesheet" href="style.css">    
     </head>
     <body>
-        <header>
+        <header class="header">
             <h1>Strona Kulinarne Przyjemności</h1>
             <p>Znajdź przepisy na wyśmienite potrawy i odkryj nowe smaki!</p>
         </header>
@@ -35,9 +35,9 @@ $result = $conn->query($sql);
         <h1>Prosta wyszukiwarka</h1>
         
         <form action="/sieraczan/przepisy/index.php" method="get">
-        <label for="searchQuery">Wyszukaj:</label>
-        <input type="text" id="searchQuery" name="search" placeholder="Znajdz swój przepis">
-        <button type="submit">Szukaj</button>
+            <input type="text" name="search" id="search" placeholder="Wyszukaj Produkt">
+            <input type="submit" value="szukaj">
+        </form>
         </form>
 
         <br>

@@ -42,7 +42,7 @@ $recipeHowToMake = $row['jak_zrobic'];
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
-        <div class="header-container">
+        <div>
             <div class="logo">
                 <header>
                 <h1>Przepis</h1>
